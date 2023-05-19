@@ -41,7 +41,7 @@ class Barra:
         self.cos = (no2.x-no1.x)/self.size
         self.sin = (no2.y-no1.y)/self.size
         self.k_local = ((modulo_elasticidade*area_secao)/self.size)*np.array([[self.cos**2,self.cos*self.sin,-self.cos**2,-self.cos*self.sin],
-                                 [self.cos*self.sin,self.sin**2,-self.cos*self.sin, self.sin**2],
+                                 [self.cos*self.sin,self.sin**2,-self.cos*self.sin, -self.sin**2],
                                  [-self.cos**2,-self.cos*self.sin,self.cos**2,self.cos*self.sin],
                                  [-self.cos*self.sin,-self.sin**2,self.cos*self.sin,self.sin**2]])
         
