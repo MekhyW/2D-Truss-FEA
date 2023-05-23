@@ -6,6 +6,8 @@ from gauss import *
 
 n_nos,matriz_nos,n_membros,matriz_incidencia,n_cargas,vetor_carregamento,n_restricoes,vetor_restricoes = importa('entrada.xls')
 
+plota(matriz_nos, matriz_incidencia)
+
 lock_flattened = [int(i) for i in vetor_restricoes.flatten()]
 carregamento_flatenned = vetor_carregamento.flatten()
 lis_no = []
