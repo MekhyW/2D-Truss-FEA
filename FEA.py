@@ -4,7 +4,7 @@ from funcoesTermosol import *
 from trelica import *
 from gauss import *
 
-n_nos,matriz_nos,n_membros,matriz_incidencia,n_cargas,vetor_carregamento,n_restricoes,vetor_restricoes = importa('entrada.xls')
+n_nos,matriz_nos,n_membros,matriz_incidencia,n_cargas,vetor_carregamento,n_restricoes,vetor_restricoes = importa('entrada-teste.xls')
 print('número de nós = ',n_nos)
 print('número de membros = ',n_membros)
 print('número de cargas = ',n_cargas)
@@ -57,13 +57,10 @@ for no in lis_no:
         matrix_rigidez[idx,idx] = 1
         vector_carga[idx] = 0
 
-
-# print(matrix_rigidez.shape)
-
 det = np.linalg.det(matrix_rigidez)
 u = np.linalg.solve(matrix_rigidez,vector_carga)
-print(f"GAUSS: {gaussSeidel(100, 1e-8, matrix_rigidez, vector_carga)}")
+print(f"GAUSS: {gaussSeidel(100, 1e-8, matrix_rigidez, vector_carga)[0]}")
 
-print('matriz de rigidez = \n',matrix_rigidez)
-print('vetor de carga = \n',vector_carga)
+#print('matriz de rigidez = \n',matrix_rigidez)
+#print('vetor de carga = \n',vector_carga)
 print('deslocamentos = \n',u)
