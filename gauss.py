@@ -1,13 +1,12 @@
 import numpy as np
 
-def calculateError(xAtual, xAnterior):
+def calculateError(xAtual, xAnterior, toleranca):
     if xAtual > 0:
         return np.divide(np.abs(xAtual - xAnterior), xAtual)
-    return 0
+    return toleranca + 1
 
 def gaussSeidel(iteracoes, tolerancia, K, F):
     n = len(F)  # Number of unknowns
-    
     deslocamentos = np.zeros(n)
     erro = np.zeros(n)
     erroAnterior = np.zeros(n)
@@ -18,7 +17,7 @@ def gaussSeidel(iteracoes, tolerancia, K, F):
             soma2 = np.dot(K[i, i + 1:], deslocamentos[i + 1:])
             deslocamentos[i] = np.divide(F[i] - soma1 - soma2, K[i, i])
         
-        erro = np.array([calculateError(deslocamentos[i], erroAnterior[i]) for i in range(n)])
+        erro = np.array([calculateError(deslocamentos[i], erroAnterior[i], tolerancia) for i in range(n)])
         erroAnterior = np.copy(deslocamentos)
         
         

@@ -56,11 +56,9 @@ for no in lis_no:
         vector_carga[idx] = 0
 
 det = np.linalg.det(matrix_rigidez)
+u_gauss = gaussSeidel(1000, 1e-8, matrix_rigidez, vector_carga)
 u = np.linalg.solve(matrix_rigidez,vector_carga)
-u_gauss = gaussSeidel(1000, 1e-20, matrix_rigidez, vector_carga)
-inverte = np.linalg.inv(matrix_rigidez) @ vector_carga
-print(inverte.shape)
-print(matrix_rigidez.shape)
+inverte = np.dot(np.linalg.inv(matrix_rigidez), vector_carga)
 
 f = open('resultados.txt', 'w', encoding='utf-8')
 f.write('número de nós = '+str(n_nos)+'\n')
