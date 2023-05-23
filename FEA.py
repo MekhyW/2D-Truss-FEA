@@ -5,10 +5,6 @@ from trelica import *
 from gauss import *
 
 n_nos,matriz_nos,n_membros,matriz_incidencia,n_cargas,vetor_carregamento,n_restricoes,vetor_restricoes = importa('entrada-teste.xls')
-print('número de nós = ',n_nos)
-print('número de membros = ',n_membros)
-print('número de cargas = ',n_cargas)
-print('número de restrições = ',n_restricoes)
 
 lock_flattened = [int(i) for i in vetor_restricoes.flatten()]
 carregamento_flatenned = vetor_carregamento.flatten()
@@ -59,8 +55,21 @@ for no in lis_no:
 
 det = np.linalg.det(matrix_rigidez)
 u = np.linalg.solve(matrix_rigidez,vector_carga)
-print(f"GAUSS: {gaussSeidel(100, 1e-8, matrix_rigidez, vector_carga)[0]}")
+u_gauss = gaussSeidel(10000, 1e-20, matrix_rigidez, vector_carga)
 
-#print('matriz de rigidez = \n',matrix_rigidez)
-#print('vetor de carga = \n',vector_carga)
-print('deslocamentos = \n',u)
+f = open('resultados.txt', 'w', encoding='utf-8')
+f.write('número de nós = '+str(n_nos)+'\n')
+f.write('número de membros = '+str(n_membros)+'\n')
+f.write('número de cargas = '+str(n_cargas)+'\n')
+f.write('número de restrições = '+str(n_restricoes)+'\n\n')
+f.write('matriz de nós = \n')
+f.write(str(matriz_nos) + '\n\n')
+f.write('matriz de rigidez = \n')
+f.write(str(matrix_rigidez) + '\n\n')
+f.write('vetor de carga = \n')
+f.write(str(vector_carga) + '\n\n')
+f.write('deslocamentos (Numpy linalg solve) = \n')
+f.write(str(u) + '\n\n')
+f.write('deslocamentos (método Gauss-Seidel) = \n')
+f.write(str(u_gauss))
+f.close()
