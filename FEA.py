@@ -4,7 +4,7 @@ from funcoesTermosol import *
 from trelica import *
 from gauss import *
 
-n_nos,matriz_nos,n_membros,matriz_incidencia,n_cargas,vetor_carregamento,n_restricoes,vetor_restricoes = importa('entrada-teste.xls')
+n_nos,matriz_nos,n_membros,matriz_incidencia,n_cargas,vetor_carregamento,n_restricoes,vetor_restricoes = importa('entrada-modelo.xls')
 
 lock_flattened = [int(i) for i in vetor_restricoes.flatten()]
 carregamento_flatenned = vetor_carregamento.flatten()
@@ -55,7 +55,10 @@ for no in lis_no:
 
 det = np.linalg.det(matrix_rigidez)
 u = np.linalg.solve(matrix_rigidez,vector_carga)
-u_gauss = gaussSeidel(10000, 1e-20, matrix_rigidez, vector_carga)
+u_gauss = gaussSeidel(1000, 1e-20, matrix_rigidez, vector_carga)
+inverte = np.linalg.inv(matrix_rigidez) @ vector_carga
+print(inverte.shape)
+print(matrix_rigidez.shape)
 
 f = open('resultados.txt', 'w', encoding='utf-8')
 f.write('número de nós = '+str(n_nos)+'\n')
@@ -72,4 +75,6 @@ f.write('deslocamentos (Numpy linalg solve) = \n')
 f.write(str(u) + '\n\n')
 f.write('deslocamentos (método Gauss-Seidel) = \n')
 f.write(str(u_gauss))
+f.write('\nmetodo 3 \n\n')
+f.write(str(inverte) + '\n\n')
 f.close()
