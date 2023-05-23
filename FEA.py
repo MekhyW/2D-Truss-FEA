@@ -58,7 +58,11 @@ for no in lis_no:
 det = np.linalg.det(matrix_rigidez)
 u_gauss = gaussSeidel(1000, 1e-8, matrix_rigidez, vector_carga)
 u = np.linalg.solve(matrix_rigidez,vector_carga)
-inverte = np.dot(np.linalg.inv(matrix_rigidez), vector_carga)
+u_gauss = gaussSeidel(1000, 1e-20, matrix_rigidez, vector_carga)
+inverte = np.linalg.inv(matrix_rigidez) @ vector_carga
+
+matriz_nos_deslocados = matriz_nos[:2] + u.reshape(2, -1)
+plota(matriz_nos_deslocados, matriz_incidencia)
 
 f = open('resultados.txt', 'w', encoding='utf-8')
 f.write('número de nós = '+str(n_nos)+'\n')
