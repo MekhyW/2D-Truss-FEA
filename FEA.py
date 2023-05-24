@@ -4,7 +4,7 @@ from funcoesTermosol import *
 from trelica import *
 from gauss import *
 
-n_nos,matriz_nos,n_membros,matriz_incidencia,n_cargas,vetor_carregamento,n_restricoes,vetor_restricoes = importa('entrada-modelo.xls')
+n_nos,matriz_nos,n_membros,matriz_incidencia,n_cargas,vetor_carregamento,n_restricoes,vetor_restricoes = importa('entrada-ponte.xls')
 
 plota(matriz_nos, matriz_incidencia)
 
@@ -58,7 +58,7 @@ for no in lis_no:
 det = np.linalg.det(matrix_rigidez)
 u_gauss = gaussSeidel(1000, 1e-8, matrix_rigidez, vector_carga)
 u = np.linalg.solve(matrix_rigidez,vector_carga)
-u_gauss = gaussSeidel(10000, 1e-200, matrix_rigidez, vector_carga)
+u_gauss = gaussSeidel(100000, 1e-20, matrix_rigidez, vector_carga)
 inverte = np.linalg.inv(matrix_rigidez) @ vector_carga
 
 matriz_nos_deslocados = matriz_nos[:2] + u.reshape(2, -1)
