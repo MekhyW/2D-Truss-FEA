@@ -58,7 +58,7 @@ for no in lis_no:
 det = np.linalg.det(matrix_rigidez)
 u_gauss = gaussSeidel(1000, 1e-8, matrix_rigidez, vector_carga)
 u = np.linalg.solve(matrix_rigidez,vector_carga)
-u_gauss = gaussSeidel(1000, 1e-20, matrix_rigidez, vector_carga)
+u_gauss = gaussSeidel(10000, 1e-200, matrix_rigidez, vector_carga)
 inverte = np.linalg.inv(matrix_rigidez) @ vector_carga
 
 matriz_nos_deslocados = matriz_nos[:2] + u.reshape(2, -1)
