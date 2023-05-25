@@ -4,7 +4,7 @@ from funcoesTermosol import *
 from trelica import *
 from gauss import *
 
-n_nos,matriz_nos,n_membros,matriz_incidencia,n_cargas,vetor_carregamento,n_restricoes,vetor_restricoes = importa('entrada-ponte.xls')
+n_nos,matriz_nos,n_membros,matriz_incidencia,n_cargas,vetor_carregamento,n_restricoes,vetor_restricoes = importa('inputs/entrada-ponte.xls')
 
 plota(matriz_nos, matriz_incidencia)
 
@@ -78,7 +78,7 @@ f.write(str(vector_carga) + '\n\n')
 f.write('deslocamentos (Numpy linalg solve) = \n')
 f.write(str(u) + '\n\n')
 f.write('deslocamentos (método Gauss-Seidel) = \n')
-f.write(str(u_gauss))
-f.write('\nmetodo 3 \n\n')
+f.write(str(u_gauss) + '\n\n')
+f.write('deslocamentos (inversão da matriz de rigidez) = \n')
 f.write(str(inverte) + '\n\n')
 f.close()

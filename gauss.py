@@ -22,11 +22,11 @@ def gaussSeidel(iteracoes, tolerancia, K, F):
         erro = np.array([calculateError(deslocamentos[i], erroAnterior[i], tolerancia) for i in range(n)])
         erroAnterior = np.copy(deslocamentos)
         
-        print(np.max(erro))
+        #print(np.max(erro))
         if (np.max(erro) < tolerancia) or (np.max(erro) ==  tolerancia * 2):
-            print(it)
+            #print(it)
             return deslocamentos, np.max(erro)
-    print(it)
+    #print(it)
     return deslocamentos, np.max(erro)
 
 

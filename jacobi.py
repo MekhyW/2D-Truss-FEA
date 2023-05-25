@@ -34,8 +34,8 @@ while(1):
     deslocamentos = np.copy(deslocamentoAux)
 
 
-    print(erroX1, erroX2, erroX3)
+    #print(erroX1, erroX2, erroX3)
     if (max(erroX1, erroX2, erroX3) < limite):
-        print(deslocamentos)
-        print(f"{erroX1:.6f}")
+        #print(deslocamentos)
+        #print(f"{erroX1:.6f}")
         break
