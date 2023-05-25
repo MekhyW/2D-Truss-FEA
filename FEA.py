@@ -6,7 +6,7 @@ from gauss import *
 
 n_nos,matriz_nos,n_membros,matriz_incidencia,n_cargas,vetor_carregamento,n_restricoes,vetor_restricoes = importa('inputs/entrada-ponte.xls')
 
-plota(matriz_nos, matriz_incidencia)
+plota(matriz_nos, matriz_incidencia,'Pontos originais')
 
 lock_flattened = [int(i) for i in vetor_restricoes.flatten()]
 carregamento_flatenned = vetor_carregamento.flatten()
@@ -22,6 +22,8 @@ for index_no in range(n_nos):
     y_carga = carregamento_flatenned[y_numeracao_liberdade]
     no = No(matriz_nos[0,index_no],matriz_nos[1,index_no],x_lock,y_lock,x_carga,y_carga,x_numeracao_liberdade,y_numeracao_liberdade)
     lis_no.append(no)
+
+plota_cargas(lis_no)
 
 lis_barra = []
 for barra in matriz_incidencia:
@@ -62,7 +64,7 @@ u_gauss = gaussSeidel(100000, 1e-20, matrix_rigidez, vector_carga)
 inverte = np.linalg.inv(matrix_rigidez) @ vector_carga
 
 matriz_nos_deslocados = matriz_nos[:2] + u.reshape(2, -1)
-plota(matriz_nos_deslocados, matriz_incidencia)
+plota(matriz_nos_deslocados, matriz_incidencia,'Pontos deslocados')
 
 f = open('resultados.txt', 'w', encoding='utf-8')
 f.write('número de nós = '+str(n_nos)+'\n')

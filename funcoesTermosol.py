@@ -1,64 +1,41 @@
 # -*- coding: utf-8 -*-
-"""
-A funcao 'plota' produz um gráfico da estrutura definida pela matriz de nos N 
-e pela incidencia Inc.
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import numpy as np
+import xlrd
+from math import sqrt
 
-Sugestao de uso:
-
-from funcoesTermosol import plota
-plota(N,Inc)
--------------------------------------------------------------------------------
-A funcao 'importa' retorna o numero de nos [nn], a matriz dos nos [N], o numero
-de membros [nm], a matriz de incidencia [Inc], o numero de cargas [nc], o vetor
-carregamento [F], o numero de restricoes [nr] e o vetor de restricoes [R] 
-contidos no arquivo de entrada.
-
-Sugestao de uso:
-    
-from funcoesTermosol import importa
-[nn,N,nm,Inc,nc,F,nr,R] = importa('entrada.xlsx')
--------------------------------------------------------------------------------
-A funcao 'geraSaida' cria um arquivo nome.txt contendo as reacoes de apoio Ft, 
-deslocamentos Ut, deformacoes Epsi, forcas Fi e tensoes Ti internas. 
-As entradas devem ser vetores coluna.
-
-Sugestao de uso:
-    
-from funcoesTermosol import geraSaida
-geraSaida(nome,Ft,Ut,Epsi,Fi,Ti)
--------------------------------------------------------------------------------
-
-"""
-def plota(N,Inc):
+def plota(N,Inc,title):
     # Numero de membros
     nm = len(Inc[:,0])
-    
-    import matplotlib as mpl
-    import matplotlib.pyplot as plt
-
-#    plt.show()
     fig = plt.figure()
     # Passa por todos os membros
     for i in range(nm):
-        
         # encontra no inicial [n1] e final [n2] 
         n1 = int(Inc[i,0])
         n2 = int(Inc[i,1])        
-
         plt.plot([N[0,n1-1],N[0,n2-1]],[N[1,n1-1],N[1,n2-1]],color='r',linewidth=3)
+    plt.title(title)
+    plt.xlabel('x [m]')
+    plt.ylabel('y [m]')
+    plt.grid(True)
+    plt.axis('equal')
+    plt.show()
 
-
+def plota_cargas(lis_no):
+    for no in lis_no:
+        plt.plot(no.x,no.y,'ro')
+        x_vec = no.x_carga/1000
+        y_vec = no.y_carga/1000
+        plt.arrow(no.x, no.y, x_vec, y_vec, head_width=sqrt((x_vec**2) + (y_vec**2))/10, head_length=sqrt((x_vec**2) + (y_vec**2))/10, fc='k', ec='k')
+    plt.title('Cargas aplicadas')
     plt.xlabel('x [m]')
     plt.ylabel('y [m]')
     plt.grid(True)
     plt.axis('equal')
     plt.show()
     
-def importa(entradaNome):
-    
-    import numpy as np
-    import xlrd
-    
+def importa(entradaNome):    
     arquivo = xlrd.open_workbook(entradaNome)
     
     ################################################## Ler os nos
