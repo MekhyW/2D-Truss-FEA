@@ -66,6 +66,14 @@ inverte = np.linalg.inv(matrix_rigidez) @ vector_carga
 matriz_nos_deslocados = matriz_nos[:2] + u.reshape(2, -1)
 plota(matriz_nos_deslocados, matriz_incidencia,'Pontos deslocados')
 
+tensões = []
+for i in range(0,len(lis_barra)):
+    barra = lis_barra[i]
+    u_barra = u[barra.dof]
+    e = (1/barra.size) * np.dot([-barra.cos, -barra.sin, barra.cos, barra.sin], u_barra)
+    sigma = barra.modulo_elasticidade * e
+    tensões.append(sigma[0])
+
 f = open('resultados.txt', 'w', encoding='utf-8')
 f.write('número de nós = '+str(n_nos)+'\n')
 f.write('número de membros = '+str(n_membros)+'\n')
@@ -85,4 +93,6 @@ f.write('Validação por (Numpy linalg solve) = \n')
 f.write(str(u) + '\n\n')
 f.write('Validação por (inversão da matriz de rigidez) = \n')
 f.write(str(inverte) + '\n\n')
+f.write('Tensões nas barras = \n')
+f.write(str(tensões))
 f.close()
