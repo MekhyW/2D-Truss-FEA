@@ -3,6 +3,7 @@ import pandas as pd
 from funcoesTermosol import *
 from trelica import *
 from gauss import *
+from jacobi import *
 
 n_nos,matriz_nos,n_membros,matriz_incidencia,n_cargas,vetor_carregamento,n_restricoes,vetor_restricoes = importa('inputs/entrada-ponte.xls')
 
@@ -58,9 +59,9 @@ for no in lis_no:
         vector_carga[idx] = 0
 
 det = np.linalg.det(matrix_rigidez)
-u_gauss = gaussSeidel(1000, 1e-8, matrix_rigidez, vector_carga)
+u_jacobi = jacobi(13, 1e-8, matrix_rigidez, vector_carga)
 u = np.linalg.solve(matrix_rigidez,vector_carga)
-u_gauss = gaussSeidel(100000, 1e-20, matrix_rigidez, vector_carga)
+u_gauss = gaussSeidel(10000, 1e-20, matrix_rigidez, vector_carga)
 inverte = np.linalg.inv(matrix_rigidez) @ vector_carga
 
 matriz_nos_deslocados = matriz_nos[:2] + u.reshape(2, -1)
@@ -88,6 +89,8 @@ f.write(str(vector_carga) + '\n\n')
 f.write("======= Resultados Obtidos =======")
 f.write('deslocamentos (método Gauss-Seidel) = \n')
 f.write(str(u_gauss) + '\n\n')
+f.write('deslocamentos (método Jacobi) = \n')
+f.write(str(u_jacobi) + '\n\n')
 f.write("======= Validação de Resultados =======")
 f.write('Validação por (Numpy linalg solve) = \n')
 f.write(str(u) + '\n\n')
