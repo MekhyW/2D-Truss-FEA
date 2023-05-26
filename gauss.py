@@ -6,7 +6,7 @@ def calculateError(xAtual, xAnterior, toleranca):
     return toleranca * 2
 
 def gaussSeidel(iteracoes, tolerancia, K, F):
-    n = len(F)  # Number of unknowns
+    n = len(F) 
     deslocamentos = np.zeros(n)
     erro = np.zeros(n)
     it = 0
