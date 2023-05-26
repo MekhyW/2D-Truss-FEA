@@ -15,8 +15,8 @@ lis_no = []
 for index_no in range(n_nos):
     x = matriz_nos[0,index_no]
     y = matriz_nos[1,index_no]
-    x_numeracao_liberdade = 2*index_no
-    y_numeracao_liberdade = 2*index_no+1
+    x_numeracao_liberdade = np.multiply(2, index_no)
+    y_numeracao_liberdade =  np.multiply(2, index_no) + 1
     x_lock = x_numeracao_liberdade in lock_flattened
     y_lock = y_numeracao_liberdade in lock_flattened
     x_carga = carregamento_flatenned[x_numeracao_liberdade]
@@ -62,7 +62,7 @@ det = np.linalg.det(matrix_rigidez)
 u_jacobi = jacobi(13, 1e-8, matrix_rigidez, vector_carga)
 u = np.linalg.solve(matrix_rigidez,vector_carga)
 u_gauss = gaussSeidel(10000, 1e-20, matrix_rigidez, vector_carga)
-inverte = np.linalg.inv(matrix_rigidez) @ vector_carga
+inverte = np.dot(np.linalg.inv(matrix_rigidez), vector_carga)
 
 matriz_nos_deslocados = matriz_nos[:2] + u.reshape(2, -1)
 plota(matriz_nos_deslocados, matriz_incidencia,'Pontos deslocados')
@@ -71,7 +71,7 @@ tensões = []
 for i in range(0,len(lis_barra)):
     barra = lis_barra[i]
     u_barra = u[barra.dof]
-    e = (1/barra.size) * np.dot([-barra.cos, -barra.sin, barra.cos, barra.sin], u_barra)
+    e = np.multiply((1/barra.size), np.dot([-barra.cos, -barra.sin, barra.cos, barra.sin], u_barra))
     sigma = barra.modulo_elasticidade * e
     tensões.append(sigma[0])
 
